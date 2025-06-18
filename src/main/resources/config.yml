@@ -1,0 +1,88 @@
+use-placeholderapi: true
+
+#§§§§§§§
+
+events:
+  custom-join:
+    toggle: true
+    message: "§2[+] §f{player} присоединился к серверу"
+  custom-quit:
+    toggle: true
+    message: "§c[-] §f{player} покинул сервер"
+  custom-death:
+    toggle: true
+    message: "§7{player} умер. §8 Причина: {death_message}"
+
+chat:
+  global:
+    toggle: true
+    prefix: "[G]"
+    name-color: "§f"
+    message-color: "§f"
+    placeholder-prefix: "%luckperms_prefix%" #Можно оставить пустым/You can leave it clear
+    placeholder-suffix: "%luckperms_suffix%"
+    world-prefix:
+      enabled: true
+      format: "§8[{world}] "  # world — будет заменён на имя мира
+    msgformat: "{world-color}{prefix} §r{placeholder-prefix}{name-color}{player} §7>> {message-color}{message}"
+
+  local:
+    toggle: true
+    radius: 50
+    prefix: "[L]"
+    name-color: "§f"
+    message-color: "§7"
+    placeholder-prefix: "%luckperms_prefix%"
+    world-prefix:
+      enabled: true
+      format: "§8[{world}] "
+    msgformat: "§7{prefix} §r{placeholder-prefix}{name-color}{player} §7>> {message-color}{message}"
+
+  admin:
+    toggle: true
+    prefix: "[A-Chat]"
+    name-color: "§f"
+    message-color: "§f"
+    placeholder-prefix: "%luckperms_prefix%"
+    world-prefix:
+      enabled: false
+      format: "§8[{world}] "
+    msgformat: "§d{prefix} §r{placeholder-prefix}{name-color}{player} §7>> {message-color}{message}"
+
+  appeal:
+    toggle: true
+    prefix: "[APPEAL]"
+    name-color: "§f"
+    message-color: "§f"
+    placeholder-prefix: "%luckperms_prefix%"
+    world-prefix:
+      enabled: false
+      format: "§8[{world}] "
+    msgformat: "§8{prefix} §r{placeholder-prefix} {name-color}{player} §7>> {message-color}{message}"
+
+
+  spy:
+    toggle: true
+    prefix: "[SPY] [✉]"
+    name-color: "§b"
+    message-color: "§7"
+    receiver-prefix: ""
+    receiver-color: "§e"
+    placeholder-prefix: "%luckperms_prefix%"
+    world-prefix:
+      enabled: true
+      format: "§8[{world}] "
+    msgformat: "§1{prefix} §r{placeholder-prefix}{name-color}{player} §b→ §r{receiver-prefix}{receiver-color}{receiver} §b>> {message-color}{message}"
+
+  private:
+    toggle: true
+    prefix: "[✉]"
+    name-color: "§b"
+    receiver-prefix: "%luckperms_prefix%"
+    receiver-color: "§e"
+    message-color: "§f"
+    placeholder-prefix: "%luckperms_prefix%"
+    world-prefix:
+      enabled: false
+      format: "§8[{world}] "
+    msgformat: "§3{prefix} §r{placeholder-prefix}{name-color}{sender} §b→ §r{receiver-prefix}{receiver-color}{receiver} §b>> {message-color}{message}"

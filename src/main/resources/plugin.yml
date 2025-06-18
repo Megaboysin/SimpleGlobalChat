@@ -1,0 +1,57 @@
+name: SimpleGlobChat
+version: '1.0-SNAPSHOT'
+main: kz.megabob.simpleGlobChat.SimpleGlobChat
+api-version: '1.21'
+authors:
+  - megabob
+softdepend: [PlaceholderAPI, LuckPerms, DiscordSRV]
+commands:
+  msg:
+    description: Отправить приватное сообщение игроку
+    usage: /msg <игрок> <сообщение>
+    aliases: [m, tell, w, т, м, message, ц, write]
+  r:
+    description: Ответить на последнее приватное сообщение
+    usage: /r <сообщение>
+    aliases: [reply, р, к, куздн]
+  appeal:
+    description: Отправить сообщение в админский чат
+    usage: /appeal <сообщение>
+    aliases: [фззуфд, обращение]
+  ignore:
+    description: Игнорирует приватные сообщения от игрока
+    usage: /ignore <игрок>
+    aliases: [ign, шптщку, игнор]
+  unignore:
+    description: Перестает игнорировать приватные сообщения от игрока
+    usage: /unignore <игрок>
+    aliases: [unign, гтшптщку, неигнор]
+  spy:
+    description: Включить/выключить режим шпиона
+    usage: /spy
+    permission: simpleglobalchatplugin.spy
+  sgc reload:
+    description: Перезагружает конфигурацию чата
+    usage: /sgc reload
+    permission: simpleglobalchatplugin.reload
+  adm-chat:
+    description: Включает/выключает админский чат
+    usage: /adm-chat
+    permission: simpleglobalchatplugin.adminchat
+  tech-chat:
+    description: Включает или отключает просмотр технических сообщений
+    usage: /tech-chat
+    permission: simpleglobalchatplugin.techchat
+permissions:
+  simpleglobalchatplugin.spy:
+    description: Право на просмотр всех сообщений
+    default: op
+  simpleglobalchatplugin.reload:
+    description: Разрешает перезагружать конфигурацию
+    default: op
+  simpleglobalchatplugin.adminchat:
+    description: Право на просмотр и отправку сообщений в админ-чате
+    default: op
+  simpleglobalchatplugin.techchat:
+    description: Позволяет видеть сообщения тех. чата
+    default: op
