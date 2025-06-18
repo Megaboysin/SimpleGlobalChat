@@ -86,6 +86,12 @@ public class FormatResolver {
             prefix = PlaceholderAPI.setPlaceholders(sender, prefix);
             receiverprefix = PlaceholderAPI.setPlaceholders(receiver, receiverprefix);
             placeholderPrefix = PlaceholderAPI.setPlaceholders(sender, placeholderPrefix);
+            if (placeholderPrefix == null || placeholderPrefix.equals("%luckperms_prefix%")) {
+                placeholderPrefix = "";
+            }
+            if (receiverprefix == null || receiverprefix.equals("%luckperms_prefix%")) {
+                receiverprefix = "";
+            }
         }
 
         // Final Replacement
