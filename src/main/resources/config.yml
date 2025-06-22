@@ -11,7 +11,7 @@ events:
     message: "§c[-] §f{player} покинул сервер"
   custom-death:
     toggle: true
-    message: "§7{player} умер. §8 Причина: {death_message}"
+    message: "§8{death_message}"
 
 chat:
   global:

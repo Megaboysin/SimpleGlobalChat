@@ -2,12 +2,8 @@ package kz.megabob.simpleGlobChat.utils;
 
 import kz.megabob.simpleGlobChat.SimpleGlobChat;
 import me.clip.placeholderapi.PlaceholderAPI;
-import net.luckperms.api.model.user.User;
-import net.luckperms.api.model.user.UserManager;
-import net.luckperms.api.cacheddata.CachedMetaData;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 
 public class FormatResolver {
@@ -42,7 +38,6 @@ public class FormatResolver {
 
         // Loading configuration and second choices
         String format = section.getString("msgformat", "{player}: {message}");
-        Bukkit.getLogger().info("Loaded format for channel " + channel + ": " + format);
         String prefix = section.getString("prefix", "");
         String nameColor = section.getString("name-color", "");
         String receivercolor = section.getString("receiver-color", "");
@@ -50,23 +45,14 @@ public class FormatResolver {
         String placeholderPrefix = section.getString("placeholder-prefix", "");
         String receiverprefix = section.getString("receiver-prefix", "");
         String worldName = sender.getWorld().getName();
-        String worldColor;
-
 
         // color of a world
-        switch (worldName.toLowerCase()) {
-            case "world":
-                worldColor = "§2";
-                break;
-            case "world_nether":
-                worldColor = "§4";
-                break;
-            case "world_the_end":
-                worldColor = "§5";
-                break;
-            default:
-                worldColor = "§3";
-        }
+        String worldColor = switch (worldName.toLowerCase()) {
+            case "world" -> "§2";
+            case "world_nether" -> "§4";
+            case "world_the_end" -> "§5";
+            default -> "§3";
+        };
 
         // name of a world
         String worldPrefix = "";
@@ -81,7 +67,6 @@ public class FormatResolver {
 
         // PlaceholderAPI
         if (usePapi) {
-            Bukkit.getLogger().info("Using PAPI ");
             format = PlaceholderAPI.setPlaceholders(sender, format);
             prefix = PlaceholderAPI.setPlaceholders(sender, prefix);
             receiverprefix = PlaceholderAPI.setPlaceholders(receiver, receiverprefix);
@@ -95,7 +80,7 @@ public class FormatResolver {
         }
 
         // Final Replacement
-        return format
+        String resolved = format
                 .replace("{world-color}", worldColor)
                 .replace("{world-prefix}", worldPrefix)
                 .replace("{prefix}", prefix)
@@ -109,5 +94,6 @@ public class FormatResolver {
                 .replace("{sender}", playerName)
                 .replace("{message}", message);
 
+        return HexColorUtil.translateHexColorCodes(resolved);
     }
 }

@@ -59,8 +59,9 @@ public class ChatHandler implements Listener {
             if (prefix == null || prefix.equals("%luckperms_prefix%")) {
                 prefix = "";
             }
+            String cleanPrefix = AdminChatHandler.stripColorCodes(prefix);
             if (channel != null) {
-                channel.sendMessage(prefix + sender.getName() + " » " + cleanMessage).queue();
+                channel.sendMessage(cleanPrefix + sender.getName() + " » " + cleanMessage).queue();
             }
             return;
         }

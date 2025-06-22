@@ -23,6 +23,12 @@ public class AdminChatHandler {
         this.formatResolver = formatResolver;
     }
 
+    public static String stripColorCodes(String input) {
+        return input.replaceAll("(?i)§[0-9A-FK-ORX]", "") // Удаляет §-коды
+                .replaceAll("(?i)&[0-9A-FK-ORX]", "") // Удаляет &-коды
+                .replaceAll("(?i)&#[0-9A-F]{6}", "");  // Удаляет hex цвета
+    }
+
     //Вход/выход в/из Админ мода
     public boolean toggleAdminMode(UUID uuid) {
         if (adminChatUsers.contains(uuid)) {
@@ -56,8 +62,9 @@ public class AdminChatHandler {
         if (prefix == null || prefix.equals("%luckperms_prefix%")) {
             prefix = "";
         }
+        String cleanPrefix = stripColorCodes(prefix);
         if (discordChannel != null) {
-            discordChannel.sendMessage("[ADMIN] " + prefix + sender.getName() + " » " + message).queue();
+            discordChannel.sendMessage("[ADMIN] " + cleanPrefix + sender.getName() + " » " + message).queue();
         }
     }
 
@@ -81,8 +88,9 @@ public class AdminChatHandler {
         if (prefix == null || prefix.equals("%luckperms_prefix%")) {
             prefix = "";
         }
+        String cleanPrefix = stripColorCodes(prefix);
         if (discordChannel != null) {
-            discordChannel.sendMessage("[APPEAL] " + prefix + sender.getName() + " » " + message).queue();
+            discordChannel.sendMessage("[APPEAL] " + cleanPrefix + sender.getName() + " » " + message).queue();
         }
     }
 
