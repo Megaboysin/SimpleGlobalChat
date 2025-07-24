@@ -1,6 +1,8 @@
 package kz.megabob.simpleGlobChat.commands;
 
+import kz.megabob.simpleGlobChat.SimpleGlobChat;
 import kz.megabob.simpleGlobChat.handlers.IgnoreHandler;
+import kz.megabob.simpleGlobChat.utils.HexColorUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -18,35 +20,35 @@ public class UnignoreCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        //Если комманду решила отправить консоль
-        if (!(sender instanceof Player)) {
-            sender.sendMessage("Команду может использовать только игрок.");
+        if (!(sender instanceof Player player)) {
+            String msg = HexColorUtil.translateHexColorCodes(SimpleGlobChat.getInstance().getLangManager().getDefault("Chat.General.NotPlayer"));
+            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', msg));
             return true;
         }
 
-        //Если в комманде слишком мало characters
-        Player player = (Player) sender;
         if (args.length != 1) {
-            player.sendMessage(ChatColor.GRAY + "Использование: /unignore <ник игрока>");
+            String msg = HexColorUtil.translateHexColorCodes(SimpleGlobChat.getInstance().getLangManager().getDefault("Chat.General.EmptyCommand"));
+            player.sendMessage(ChatColor.translateAlternateColorCodes('&', msg));
             return true;
         }
 
-        //Если игрока нет
         Player target = Bukkit.getPlayerExact(args[0]);
         if (target == null || !target.isOnline()) {
-            player.sendMessage(ChatColor.RED + "Игрок не найден.");
+            String msg = HexColorUtil.translateHexColorCodes(SimpleGlobChat.getInstance().getLangManager().getDefault("Chat.General.PlayerOffline"));
+            player.sendMessage(ChatColor.translateAlternateColorCodes('&', msg));
             return true;
         }
 
-        //Что бы самого себя не начали игнорить
-        if (player.equals(target)){
-            player.sendMessage(ChatColor.RED + "Вы не можете использовать эту команду на себе.");
+        if (player.equals(target)) {
+            String msg = HexColorUtil.translateHexColorCodes(SimpleGlobChat.getInstance().getLangManager().getDefault("Chat.Ignore.Self"));
+            player.sendMessage(ChatColor.translateAlternateColorCodes('&', msg));
             return true;
         }
 
-        //Перестать игнорировать челикса
         ignoreHandler.unignore(player, target);
-        player.sendMessage(ChatColor.GOLD + "Вы перестали игнорировать " + target.getName() + ".");
+        String rawMessage = SimpleGlobChat.getInstance().getLangManager().getDefault("Chat.Ignore.Unignored");
+        String colored = HexColorUtil.translateHexColorCodes(rawMessage);
+        player.sendMessage(ChatColor.translateAlternateColorCodes('&', colored).replace("%player%", target.getName()));
         return true;
     }
 }

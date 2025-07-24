@@ -1,7 +1,9 @@
 use-placeholderapi: true
 
-#§§§§§§§
+# or "eng"
+language: "ru"
 
+#§§§§§§§
 events:
   custom-join:
     toggle: true
@@ -13,6 +15,22 @@ events:
     toggle: true
     message: "§8{death_message}"
 
+#Available placeholders for usage:
+#"{world-color}"
+#{world-prefix}"
+#"{prefix}"
+#{placeholder-prefix}"
+#name-color}"
+#{message-color}"
+#{player}"
+#{receiver-prefix}"
+#{receiver-color}"
+#{receiver}"
+#{sender}"
+#{message}"
+#You can change their order anyway you want, write them in msgformat or delete, and write them into each other as shown in:
+#prefix: "§7[§7{group} &#00ffccGROUP§7]"
+#Here {group} is used in {prefix}
 chat:
   global:
     toggle: true
@@ -23,7 +41,7 @@ chat:
     placeholder-suffix: "%luckperms_suffix%"
     world-prefix:
       enabled: true
-      format: "§8[{world}] "  # world — будет заменён на имя мира
+      format: "§8[{world}] "  # world — будет заменён на имя мира/will be replaced with name of the world
     msgformat: "{world-color}{prefix} §r{placeholder-prefix}{name-color}{player} §7>> {message-color}{message}"
 
   local:
@@ -51,18 +69,17 @@ chat:
 
   appeal:
     toggle: true
-    prefix: "[APPEAL]"
+    prefix: "[&#f75eabAPPEAL§8]"
     name-color: "§f"
     message-color: "§f"
     placeholder-prefix: "%luckperms_prefix%"
     world-prefix:
       enabled: false
       format: "§8[{world}] "
-    msgformat: "§8{prefix} §r{placeholder-prefix} {name-color}{player} §7>> {message-color}{message}"
-
+    msgformat: "§8{prefix} §r{placeholder-prefix}{name-color}{player} §7>> {message-color}{message}"
 
   spy:
-    toggle: true
+    toggle: true  
     prefix: "[SPY] [✉]"
     name-color: "§b"
     message-color: "§7"
@@ -77,9 +94,9 @@ chat:
   private:
     toggle: true
     prefix: "[✉]"
-    name-color: "§b"
+    name-color: "&#7cdaf7"
     receiver-prefix: "%luckperms_prefix%"
-    receiver-color: "§e"
+    receiver-color: "&#f2e77e"
     message-color: "§f"
     placeholder-prefix: "%luckperms_prefix%"
     world-prefix:

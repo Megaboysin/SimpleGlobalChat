@@ -1,6 +1,8 @@
 package kz.megabob.simpleGlobChat.commands;
 
+import kz.megabob.simpleGlobChat.SimpleGlobChat;
 import kz.megabob.simpleGlobChat.handlers.PrvtMessageHandler;
+import kz.megabob.simpleGlobChat.utils.HexColorUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -18,35 +20,41 @@ public class ReplyMsg implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        if (!(sender instanceof Player)) {
-            sender.sendMessage("Эту команду может использовать только игрок.");
+        if (!(sender instanceof Player player)) {
+            String msg = HexColorUtil.translateHexColorCodes(
+                    SimpleGlobChat.getInstance().getLangManager().getDefault("Chat.General.NotPlayer")
+            );
+            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', msg));
             return true;
         }
 
-        Player player = (Player) sender;
         if (args.length < 1) {
-            player.sendMessage("Использование: /r <сообщение>");
+            String msg = HexColorUtil.translateHexColorCodes(
+                    SimpleGlobChat.getInstance().getLangManager().getDefault("Chat.General.EmptyCommand")
+            );
+            player.sendMessage(ChatColor.translateAlternateColorCodes('&', msg));
             return true;
         }
 
         var targetUUID = handler.getLastMessaged(player.getUniqueId());
         if (targetUUID == null) {
-            player.sendMessage(ChatColor.RED + "Нет игрока для ответа.");
+            String msg = HexColorUtil.translateHexColorCodes(
+                    SimpleGlobChat.getInstance().getLangManager().getDefault("Chat.Private.NoReply")
+            );
+            player.sendMessage(ChatColor.translateAlternateColorCodes('&', msg));
             return true;
         }
 
         Player target = Bukkit.getPlayer(targetUUID);
         if (target == null || !target.isOnline()) {
-            player.sendMessage(ChatColor.RED + "Игрок оффлайн.");
+            String msg = HexColorUtil.translateHexColorCodes(
+                    SimpleGlobChat.getInstance().getLangManager().getDefault("Chat.Private.Offline")
+            );
+            player.sendMessage(ChatColor.translateAlternateColorCodes('&', msg));
             return true;
         }
 
-        StringBuilder messageBuilder = new StringBuilder();
-        for (String arg : args) {
-            messageBuilder.append(arg).append(" ");
-        }
-
-        String message = messageBuilder.toString().trim();
+        String message = String.join(" ", args);
         handler.sendPrivateMessage(player, target, message);
         return true;
     }

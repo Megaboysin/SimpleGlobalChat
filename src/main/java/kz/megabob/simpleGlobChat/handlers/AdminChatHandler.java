@@ -2,7 +2,9 @@ package kz.megabob.simpleGlobChat.handlers;
 
 import github.scarsz.discordsrv.DiscordSRV;
 import github.scarsz.discordsrv.dependencies.jda.api.entities.TextChannel;
+import kz.megabob.simpleGlobChat.SimpleGlobChat;
 import kz.megabob.simpleGlobChat.utils.FormatResolver;
+import kz.megabob.simpleGlobChat.utils.HexColorUtil;
 import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -56,15 +58,21 @@ public class AdminChatHandler {
         }
 
         Bukkit.getConsoleSender().sendMessage(formatted);
-        TextChannel discordChannel = DiscordSRV.getPlugin().getDestinationTextChannelForGameChannelName("admin");
 
-        String prefix = PlaceholderAPI.setPlaceholders(sender, "%luckperms_prefix%");
-        if (prefix == null || prefix.equals("%luckperms_prefix%")) {
-            prefix = "";
+        String cleanPrefix = "";
+        if (Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI")) {
+            String prefix = PlaceholderAPI.setPlaceholders(sender, "%luckperms_prefix%");
+            if (prefix == null || prefix.equals("%luckperms_prefix%")) {
+                prefix = "";
+            }
+            cleanPrefix = stripColorCodes(prefix);
         }
-        String cleanPrefix = stripColorCodes(prefix);
-        if (discordChannel != null) {
-            discordChannel.sendMessage("[ADMIN] " + cleanPrefix + sender.getName() + " » " + message).queue();
+
+        if (Bukkit.getPluginManager().getPlugin("DiscordSRV") != null) {
+            TextChannel discordChannel = DiscordSRV.getPlugin().getDestinationTextChannelForGameChannelName("admin");
+            if (discordChannel != null) {
+                discordChannel.sendMessage("[ADMIN] " + cleanPrefix + sender.getName() + " » " + message).queue();
+            }
         }
     }
 
@@ -80,17 +88,27 @@ public class AdminChatHandler {
             }
         }
 
-        sender.sendMessage(ChatColor.GOLD + "Ваше обращение было отправлено администрации.");
+        String msg = HexColorUtil.translateHexColorCodes(
+                SimpleGlobChat.getInstance().getLangManager().getDefault("Chat.Appeal.Sent")
+        );
+        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', msg));
         Bukkit.getConsoleSender().sendMessage(formatted);
         Bukkit.getConsoleSender().sendMessage(ChatColor.stripColor(formatted));
-        TextChannel discordChannel = DiscordSRV.getPlugin().getDestinationTextChannelForGameChannelName("appeal");
-        String prefix = PlaceholderAPI.setPlaceholders(sender, "%luckperms_prefix%");
-        if (prefix == null || prefix.equals("%luckperms_prefix%")) {
-            prefix = "";
+
+        String cleanPrefix = "";
+        if (Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI")) {
+            String prefix = PlaceholderAPI.setPlaceholders(sender, "%luckperms_prefix%");
+            if (prefix == null || prefix.equals("%luckperms_prefix%")) {
+                prefix = "";
+            }
+            cleanPrefix = stripColorCodes(prefix);
         }
-        String cleanPrefix = stripColorCodes(prefix);
-        if (discordChannel != null) {
-            discordChannel.sendMessage("[APPEAL] " + cleanPrefix + sender.getName() + " » " + message).queue();
+
+        if (Bukkit.getPluginManager().getPlugin("DiscordSRV") != null) {
+            TextChannel discordChannel = DiscordSRV.getPlugin().getDestinationTextChannelForGameChannelName("appeal");
+            if (discordChannel != null) {
+                discordChannel.sendMessage("[APPEAL] " + cleanPrefix + sender.getName() + " » " + message).queue();
+            }
         }
     }
 

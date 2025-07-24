@@ -1,6 +1,8 @@
 package kz.megabob.simpleGlobChat.commands;
 
+import kz.megabob.simpleGlobChat.SimpleGlobChat;
 import kz.megabob.simpleGlobChat.handlers.PrvtMessageHandler;
+import kz.megabob.simpleGlobChat.utils.HexColorUtil;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -17,20 +19,32 @@ public class SpyToggle implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        if (!(sender instanceof Player)) {
-            sender.sendMessage("Только игроки могут использовать эту команду.");
+        if (!(sender instanceof Player player)) {
+            String msg = HexColorUtil.translateHexColorCodes(
+                    SimpleGlobChat.getInstance().getLangManager().getDefault("Chat.General.NotPlayer")
+            );
+            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', msg));
             return true;
         }
 
-        Player player = (Player) sender;
-
         if (!player.hasPermission("simpleglobalchatplugin.spy")) {
-            player.sendMessage(ChatColor.RED + "У вас нет прав на шпионский режим.");
+            String msg = HexColorUtil.translateHexColorCodes(
+                    SimpleGlobChat.getInstance().getLangManager().getDefault("Chat.General.NoPermission")
+            );
+            player.sendMessage(ChatColor.translateAlternateColorCodes('&', msg));
             return true;
         }
 
         boolean nowEnabled = handler.toggleSpy(player.getUniqueId());
-        player.sendMessage(ChatColor.GOLD + "Шпионский режим " + (nowEnabled ? "включен." : "выключен."));
+
+        String messageKey = nowEnabled
+                ? "Chat.Private.SpyMode.Enabled"
+                : "Chat.Private.SpyMode.Disabled";
+
+        String msg = HexColorUtil.translateHexColorCodes(
+                SimpleGlobChat.getInstance().getLangManager().getDefault(messageKey)
+        );
+        player.sendMessage(ChatColor.translateAlternateColorCodes('&', msg));
         return true;
     }
 }

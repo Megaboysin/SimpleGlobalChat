@@ -5,6 +5,7 @@ api-version: '1.21'
 authors:
   - megabob
 softdepend: [PlaceholderAPI, LuckPerms, DiscordSRV]
+folia-supported: true
 commands:
   msg:
     description: Отправить приватное сообщение игроку
@@ -30,24 +31,27 @@ commands:
     description: Включить/выключить режим шпиона
     usage: /spy
     permission: simpleglobalchatplugin.spy
-  sgc reload:
-    description: Перезагружает конфигурацию чата
-    usage: /sgc reload
-    permission: simpleglobalchatplugin.reload
   adm-chat:
     description: Включает/выключает админский чат
     usage: /adm-chat
     permission: simpleglobalchatplugin.adminchat
-  tech-chat:
-    description: Включает или отключает просмотр технических сообщений
-    usage: /tech-chat
-    permission: simpleglobalchatplugin.techchat
+  simpleglobchat:
+    description: Главная команда плагина
+    usage: /<command> reload
+    permission: simpleglobchatplugin.reload
+    aliases: [sgc]
+  chathelp:
+    description: Помощь по командам
+    usage: /chathelp
 permissions:
   simpleglobalchatplugin.spy:
     description: Право на просмотр всех сообщений
     default: op
-  simpleglobalchatplugin.reload:
-    description: Разрешает перезагружать конфигурацию
+  simpleglobchat.use:
+    description: Позволяет использовать /simpleglobchat (view help и т.п.)
+    default: true
+  simpleglobchat.reload:
+    description: Разрешает перезагрузку конфигурации (/simpleglobchat reload)
     default: op
   simpleglobalchatplugin.adminchat:
     description: Право на просмотр и отправку сообщений в админ-чате

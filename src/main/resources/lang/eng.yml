@@ -1,0 +1,64 @@
+Chat:
+  General:
+    NotPlayer: "§cOnly players can use this command."
+    NoRights: "§cYou do not have permission to use this command."
+    PlayerOffline: "§cThe player is offline or you entered an invalid nickname."
+    EmptyCommand: "&cPlease provide arguments."
+
+  Private:
+    Self: "§cYou can't send private messages to yourself."
+    NoReply: "§cThere is no player to reply to."
+    Ignoring: "The player is ignoring you. Message not sent."
+    SpyMode:
+      Enabled: "Spy mode enabled."
+      Disabled: "Spy mode disabled."
+
+  Admchat:
+    Toggle:
+      Enabled: "§6Admin chat mode enabled."
+      Disabled: "§6Admin chat mode disabled."
+
+  Appeal:
+    NotPlayer: "§cOnly players can use this command."
+    Sent: "Your appeal has been sent to the administrators."
+
+  Ignore:
+    Self: "§cYou can't ignore yourself."
+    Success: "§eYou are now ignoring %player%."
+    Unignored: "&6You are no longer ignoring %player%."
+
+  Main:
+    Help:
+      Title: "Available commands (§e%current%§7/§e%total%§7):"
+      InvalidPage: "&cInvalid page: &f%page%"
+      PreviousPage: "◀ Prev |"
+      NextPage: "Next ▶"
+      PageIndicator: "Page %current% of %total%"
+      Reloaded: "&aConfiguration reloaded."
+      UnknownCommand: "&cUnknown subcommand. Use &e/sgc help&c."
+
+commands:
+  msg:
+    usage: "/msg <player> <message>"
+    description: "Send a private message"
+  r:
+    usage: "/r <message>"
+    description: "Reply to the last private message"
+  appeal:
+    usage: "/appeal <message>"
+    description: "Send a message to the admin chat"
+  ignore:
+    usage: "/ignore <player>"
+    description: "Ignore a player"
+  unignore:
+    usage: "/unignore <player>"
+    description: "Stop ignoring a player"
+  spy:
+    usage: "/spy"
+    description: "Toggle spy mode"
+  adm-chat:
+    usage: "/adm-chat"
+    description: "Toggle admin chat mode"
+  reload:
+    usage: "/sgc reload"
+    description: "Reload plugin config"

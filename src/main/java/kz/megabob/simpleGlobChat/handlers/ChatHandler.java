@@ -17,6 +17,8 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
+import static kz.megabob.simpleGlobChat.handlers.AdminChatHandler.stripColorCodes;
+
 public class ChatHandler implements Listener {
 
     private final FileConfiguration config;
@@ -33,9 +35,9 @@ public class ChatHandler implements Listener {
 
     @EventHandler
     public void onPlayerChat(AsyncPlayerChatEvent event) {
+        if (event.isCancelled()) return;
         Player sender = event.getPlayer();
         String message = event.getMessage();
-        boolean usePapi = config.getBoolean("use-placeholderapi", true);
 
         // Если игрок в админ моде, то соодщение отменяет свою отправку здесь, поэтому отправляется только в адмчат
         if (adminChatHandler.isInAdminMode(sender.getUniqueId())) {
@@ -52,16 +54,22 @@ public class ChatHandler implements Listener {
             for (Player p : Bukkit.getOnlinePlayers()) {
                 p.sendMessage(ChatColor.translateAlternateColorCodes('&', formatted));
             }
-            Bukkit.getConsoleSender().sendMessage(formatted);
+            Bukkit.getConsoleSender().sendMessage(ChatColor.stripColor(formatted));
 
-            TextChannel channel = DiscordSRV.getPlugin().getDestinationTextChannelForGameChannelName("global");
-            String prefix = PlaceholderAPI.setPlaceholders(sender, "%luckperms_prefix%");
-            if (prefix == null || prefix.equals("%luckperms_prefix%")) {
-                prefix = "";
+            String cleanPrefix = "";
+            if (Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI")) {
+                String prefix = PlaceholderAPI.setPlaceholders(sender, "%luckperms_prefix%");
+                if (prefix == null || prefix.equals("%luckperms_prefix%")) {
+                    prefix = "";
+                }
+                cleanPrefix = stripColorCodes(prefix);
             }
-            String cleanPrefix = AdminChatHandler.stripColorCodes(prefix);
-            if (channel != null) {
-                channel.sendMessage(cleanPrefix + sender.getName() + " » " + cleanMessage).queue();
+
+            if (Bukkit.getPluginManager().getPlugin("DiscordSRV") != null) {
+                TextChannel channel = DiscordSRV.getPlugin().getDestinationTextChannelForGameChannelName("global");
+                if (channel != null) {
+                    channel.sendMessage(cleanPrefix + sender.getName() + " » " + cleanMessage).queue();
+                }
             }
             return;
         }
@@ -76,16 +84,6 @@ public class ChatHandler implements Listener {
             }
         }
 
-        //Для шпионов (Пока что не работает)
-        for (UUID spyUUID : spies) {
-            Player spy = Bukkit.getPlayer(spyUUID);
-            if (spy != null && spy.isOnline() && !spy.equals(sender)) {
-                String formattedspy = formatResolver.resolve("spy", sender, null, message);
-                spy.sendMessage(ChatColor.translateAlternateColorCodes('&', formatted));
-                spy.sendMessage(ChatColor.translateAlternateColorCodes('&', formattedspy));
-            }
-        }
-
         // Шпионы
         String spyFormatted = formatResolver.resolve("spy", sender, null, message);
         for (UUID spyUUID : spies) {
@@ -96,6 +94,6 @@ public class ChatHandler implements Listener {
         }
 
         // Дублирование сообщения в консоль
-        Bukkit.getConsoleSender().sendMessage(formatted);
+        Bukkit.getConsoleSender().sendMessage(ChatColor.stripColor(formatted));
     }
 }

@@ -1,0 +1,68 @@
+Chat:
+  General:
+    NotPlayer: "§cТолько игроки могут использовать эту команду."
+    NoRights: "§cУ вас нет прав на выполнение этой комманды."
+    PlayerOffline: "§cИгрок не в сети или вы ввели не правильный никнейм."
+    EmptyCommand: "&cПожалуйста, укажите аргументы."
+
+  Private:
+    Self: "§cНельзя писать себе в личные сообщения."
+    NoReply: "§cНет игрока, которому можно ответить."
+    Ignoring: "Игрок игнорирует вас. Сообщение не отправлено."
+    SpyMode:
+      Enabled: "Шпионский режим включен."
+      Disabled: "Шпионский режим выключен."
+
+  Admchat:
+    Toggle:
+      Enabled: "§6Режим админ-чата включен."
+      Disabled: "§6Режим админ-чата выключен."
+
+  Appeal:
+    NotPlayer: "§cТолько игроки могут использовать эту команду."
+    Sent: "Ваше обращение было отправлено администрации."
+  Ignore:
+    Self: "§cНельзя игнорировать самого себя."
+    Success: "§eВы начали игнорировать %player%."
+    Unignored: "&6Вы перестали игнорировать %player%."
+
+  Main:
+    Help:
+      Title: "Доступные команды (§e%current%§7/§e%total%§7):"
+      InvalidPage: "&cНеверная страница: &f%page%"
+      PreviousPage: "Пред |"
+      NextPage: "След"
+      PageIndicator: "Страница %current% из %total%"
+      Reloaded: "&aКонфигурация перезагружена."
+      UnknownCommand: "&cНеизвестная подкоманда. Используйте &e/sgc help&c."
+
+commands:
+  msg:
+    usage: "/msg <игрок> <сообщение>"
+    description: "Отправить личное сообщение"
+  r:
+    usage: "/r <сообщение>"
+    description: "Ответить на последнее личное сообщение"
+  appeal:
+    usage: "/appeal <сообщение>"
+    description: "Отправить сообщение в админ-чат"
+  ignore:
+    usage: "/ignore <игрок>"
+    description: "Игнорировать игрока"
+  unignore:
+    usage: "/unignore <игрок>"
+    description: "Прекратить игнорирование игрока"
+  spy:
+    usage: "/spy"
+    description: "Переключить шпионский режим"
+  adm-chat:
+    usage: "/adm-chat"
+    description: "Переключить режим админ-чата"
+  reload:
+    usage: "/sgc reload"
+    description: "Перезагрузить конфигурацию плагина"
+
+
+
+
+

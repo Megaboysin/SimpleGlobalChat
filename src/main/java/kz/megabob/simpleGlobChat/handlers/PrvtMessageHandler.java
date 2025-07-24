@@ -1,5 +1,6 @@
 package kz.megabob.simpleGlobChat.handlers;
 
+import kz.megabob.simpleGlobChat.utils.HexColorUtil;
 import me.clip.placeholderapi.PlaceholderAPI;
 import kz.megabob.simpleGlobChat.SimpleGlobChat;
 import kz.megabob.simpleGlobChat.utils.FormatResolver;
@@ -31,7 +32,10 @@ public class PrvtMessageHandler {
 
         // Проверка игнора
         if (ignoreHandler.isIgnoring(receiver.getUniqueId(), sender.getUniqueId())) {
-            sender.sendMessage(ChatColor.RED + " Игрок игнорирует вас. Сообщение не отправлено.");
+            String msg = HexColorUtil.translateHexColorCodes(
+                    SimpleGlobChat.getInstance().getLangManager().getDefault("Chat.Private.Ignoring")
+            );
+            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', msg));
             return;
         }
         // Отправка форматированного приватного меседж
